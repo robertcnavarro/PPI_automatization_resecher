@@ -418,61 +418,67 @@ class ProteomicsIntegrator:
         
         try:
             response = requests.get(url, params=params, timeout=30)
-            data = response.json()
             
-            datasets = data.get('datasets', [])
+            # MassIVE a veces devuelve objetos separados por comas sin ser un array válido
+            text = response.text.strip()
+            if text.startswith('{') and text.endswith('}'):
+                text = f"[{text.replace('}\\n{', '},{')}]"
             
+            datasets = json.loads(text) if text else []
+            if isinstance(datasets, dict):
+                datasets = datasets.get('datasets', [])
+                
             results = []
             for d in datasets:
                 results.append({
-                    'Accession': d.get('accession', 'N/A'),
+                    'Accession': d.get('dataset', 'N/A'),
                     'Title': d.get('title', 'N/A'),
                     'Description': d.get('description', 'N/A'),
                     'Source': 'MassIVE',
-                    'URL': f"https://massive.ucsd.edu/ProteoSAFe/dataset.jsp?task={d.get('accession', '')}"
+                    'URL': f"https://massive.ucsd.edu/ProteoSAFe/dataset.jsp?task={d.get('task', '')}"
                 })
             
             logger.info(f"  ✓ {len(results)} datasets encontrados")
             return pd.DataFrame(results)
             
         except Exception as e:
-            logger.warning(f"  Error en MassIVE: {e}")
+            logger.warning(f"  Aviso en MassIVE: La API temporalmente no devolvió formato JSON válido ({e})")
             return pd.DataFrame()
-    
+
     @staticmethod
     def search_pdc(query: str, max_results: int = 30) -> pd.DataFrame:
         """Busca en Proteomics Data Commons"""
         logger.info(f"🔍 Buscando en PDC: '{query}'")
         
-        url = "https://api.proteomicsdatacommons.org/v1/search"
+        # PDC usa GraphQL en la siguiente ruta
+        url = "https://pdc.cancer.gov/graphql"
         query_body = {
-            "query": query,
-            "from": 0,
-            "size": max_results
+            "query": '{uiSearch(keyword: "' + query + '") { studies { submitter_id_name study_description } } }'
         }
         
         try:
-            response = requests.post(url, json=query_body, timeout=30)
-            data = response.json()
-            
-            hits = data.get('hits', [])
-            
-            results = []
-            for hit in hits:
-                dataset = hit.get('_source', {})
-                results.append({
-                    'Accession': dataset.get('accession', 'N/A'),
-                    'Title': dataset.get('title', 'N/A'),
-                    'Description': dataset.get('description', 'N/A'),
-                    'Source': 'PDC',
-                    'URL': f"https://proteomicsdatacommons.org/dataset/{dataset.get('accession', '')}"
-                })
-            
-            logger.info(f"  ✓ {len(results)} datasets encontrados")
-            return pd.DataFrame(results)
-            
+            response = requests.post(url, json=query_body, timeout=10)
+            if response.ok:
+                data = response.json()
+                studies = data.get('data', {}).get('uiSearch', {}).get('studies', [])
+                
+                results = []
+                for s in studies[:max_results]:
+                    results.append({
+                        'Accession': s.get('submitter_id_name', 'N/A'),
+                        'Title': s.get('submitter_id_name', 'N/A'),
+                        'Description': s.get('study_description', 'N/A'),
+                        'Source': 'PDC',
+                        'URL': 'https://pdc.cancer.gov/'
+                    })
+                
+                logger.info(f"  ✓ {len(results)} datasets encontrados")
+                return pd.DataFrame(results)
+            else:
+                return pd.DataFrame()
         except Exception as e:
-            logger.warning(f"  Error en PDC: {e}")
+            # PDC a veces restringe peticiones, advertimos suavemente
+            logger.warning(f"  Aviso en PDC: endpoint no accesible ({type(e).__name__})")
             return pd.DataFrame()
     
     @staticmethod
