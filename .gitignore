@@ -1,0 +1,7 @@
+VSR_Complete_Analysis/data/
+VSR_Complete_Analysis/logs/
+__pycache__/
+*.pdf
+.RData
+.Rhistory
+.ipynb_checkpoints/
