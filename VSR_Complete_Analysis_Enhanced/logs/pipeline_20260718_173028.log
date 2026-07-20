@@ -1,0 +1,68 @@
+2026-07-18 17:30:28,920 - INFO - 
+================================================================================
+2026-07-18 17:30:28,920 - INFO - 🧬 VSR COMPLETE PIPELINE - VERSIÓN MEJORADA
+2026-07-18 17:30:28,920 - INFO -    Análisis Integrativo de Redes con Modelado Mecanístico
+2026-07-18 17:30:28,920 - INFO - ================================================================================
+2026-07-18 17:30:28,920 - INFO - Inicio: 2026-07-18 17:30:28
+2026-07-18 17:30:28,920 - INFO - 📋 Compilando listas de proteínas con anotaciones mejoradas
+2026-07-18 17:30:28,936 - INFO -   ✓ 44 proteínas humanas, 11 proteínas virales
+2026-07-18 17:30:28,937 - INFO - 🔗 Descargando PPIs de STRING (55 proteínas)
+2026-07-18 17:30:31,493 - INFO -     Lote 1: 336 interacciones
+2026-07-18 17:30:31,997 - INFO -   ✓ 336 interacciones de STRING
+2026-07-18 17:30:31,998 - INFO - 🔗 Consultando BioGRID (55 proteínas)
+2026-07-18 17:31:15,260 - WARNING -   No se obtuvieron interacciones de BioGRID
+2026-07-18 17:31:15,263 - INFO - 🔗 Combinando PPIs
+2026-07-18 17:31:15,278 - INFO -   ✓ 336 interacciones combinadas
+2026-07-18 17:31:15,280 - INFO - 🧬 Obteniendo datos de abundancia proteica
+2026-07-18 17:31:15,280 - INFO - 🔍 Buscando en PRIDE: 'Respiratory Syncytial Virus infection human'
+2026-07-18 17:31:16,637 - INFO -   ✓ 0 proyectos encontrados
+2026-07-18 17:31:16,639 - INFO - 🔍 Buscando en MassIVE: 'Respiratory Syncytial Virus infection human'
+2026-07-18 17:31:17,199 - WARNING -   MassIVE API error: 404
+2026-07-18 17:31:17,201 - INFO - 🔍 Buscando en PDC: 'Respiratory Syncytial Virus infection human'
+2026-07-18 17:31:18,485 - WARNING -   PDC API error: 400
+2026-07-18 17:31:18,489 - INFO -   ✓ Abundancia obtenida para 55 proteínas
+2026-07-18 17:31:18,489 - INFO - 📊 Integrando datos de expresión diferencial (Meta-análisis)
+2026-07-18 17:31:18,489 - WARNING -   ⚠️ Archivo GSE196587_expression.tsv no encontrado, generando datos simulados
+2026-07-18 17:31:18,495 - WARNING -   ⚠️ Archivo GSE197364_expression.tsv no encontrado, generando datos simulados
+2026-07-18 17:31:18,499 - WARNING -   ⚠️ Archivo GSE42026_expression.tsv no encontrado, generando datos simulados
+2026-07-18 17:31:18,503 - WARNING -   ⚠️ Archivo GSE124124_expression.tsv no encontrado, generando datos simulados
+2026-07-18 17:31:18,510 - WARNING -   ⚠️ Archivo GSE34205_expression.tsv no encontrado, generando datos simulados
+2026-07-18 17:31:18,531 - INFO -   ✓ Meta-análisis completado: 55 proteínas
+2026-07-18 17:31:18,533 - INFO - 🔧 Construyendo red ponderada integrada multi-ómica
+2026-07-18 17:31:18,571 - INFO -   ✓ Red: 57 nodos, 336 aristas
+2026-07-18 17:31:18,605 - ERROR - ❌ Error en el pipeline: GraphML does not support type <class 'pandas.core.series.Series'> as data values.
+2026-07-18 17:31:18,612 - ERROR - Traceback (most recent call last):
+  File "/home/rc/anaconda3/lib/python3.13/site-packages/networkx/readwrite/graphml.py", line 456, in get_xml_type
+    return self.xml_type[key]
+           ~~~~~~~~~~~~~^^^^^
+KeyError: <class 'pandas.core.series.Series'>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/rc/Documents/marcioproyecto/rsv_network_pipeline_real.py", line 1961, in run
+    nx.write_graphml(self.G, Config.INTEGRATED_DIR / "vsr_network.graphml")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rc/anaconda3/lib/python3.13/site-packages/networkx/utils/decorators.py", line 784, in func
+    return argmap._lazy_compile(__wrapper)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "<class 'networkx.utils.decorators.argmap'> compilation 5", line 5, in argmap_write_graphml_lxml_1
+    import itertools
+             ^^^^^^^
+  File "/home/rc/anaconda3/lib/python3.13/site-packages/networkx/readwrite/graphml.py", line 177, in write_graphml_lxml
+    writer = GraphMLWriterLxml(
+        path,
+    ...<5 lines>...
+        edge_id_from_attribute=edge_id_from_attribute,
+    )
+  File "/home/rc/anaconda3/lib/python3.13/site-packages/networkx/readwrite/graphml.py", line 747, in __init__
+    self.add_graph_element(graph)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/home/rc/anaconda3/lib/python3.13/site-packages/networkx/readwrite/graphml.py", line 788, in add_graph_element
+    T = self.get_xml_type(self.attr_type(k, "node", v))
+  File "/home/rc/anaconda3/lib/python3.13/site-packages/networkx/readwrite/graphml.py", line 458, in get_xml_type
+    raise TypeError(
+        f"GraphML does not support type {key} as data values."
+    ) from err
+TypeError: GraphML does not support type <class 'pandas.core.series.Series'> as data values.
+

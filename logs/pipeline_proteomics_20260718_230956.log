@@ -1,0 +1,50 @@
+2026-07-18 23:09:56,512 - INFO - 
+🧬 RECOPILANDO DATOS PROTEÓMICOS
+2026-07-18 23:09:56,512 - INFO - ============================================================
+2026-07-18 23:09:56,512 - INFO - 🔍 Buscando archivos de proteómica locales...
+2026-07-18 23:09:56,872 - WARNING -   ⚠️ No se encontraron archivos de proteómica locales
+2026-07-18 23:09:56,872 - INFO -   No se encontraron datos locales, consultando APIs...
+2026-07-18 23:09:56,872 - INFO - 🔍 Consultando PRIDE API para: 'Respiratory Syncytial Virus'
+2026-07-18 23:09:58,620 - INFO -   ✅ 20 proyectos encontrados en PRIDE
+2026-07-18 23:09:58,623 - INFO - 🔍 Consultando ProteomeXchange para: 'RSV'
+2026-07-18 23:09:59,849 - WARNING -   ⚠️ Error en ProteomeXchange: Expecting value: line 1 column 1 (char 0)
+2026-07-18 23:09:59,852 - INFO -   ✅ Datos proteómicos obtenidos para 42 proteínas
+2026-07-18 23:09:59,856 - INFO -   📁 Datos guardados en: /home/rc/Documents/marcioproyecto/data/proteomics/proteomics_data.tsv
+2026-07-18 23:09:59,856 - INFO - 
+📊 CARGANDO DATOS TRANSCRIPTOMICOS
+2026-07-18 23:09:59,856 - INFO - ============================================================
+2026-07-18 23:09:59,857 - INFO -   ⚠️ No se encontraron datos transcriptómicos, generando simulados
+2026-07-18 23:09:59,857 - INFO -   📊 Generando datos de expresión realistas
+2026-07-18 23:09:59,858 - INFO -   ✅ Datos generados para 42 proteínas
+2026-07-18 23:09:59,860 - INFO - 
+🔧 CONSTRUYENDO RED MULTI-ÓMICA
+2026-07-18 23:09:59,861 - INFO - ============================================================
+2026-07-18 23:09:59,861 - INFO -   44 interacciones filtradas
+2026-07-18 23:09:59,862 - INFO -   ✅ Red: 42 nodos, 43 aristas
+2026-07-18 23:09:59,865 - INFO - 
+📊 ANALIZANDO RED MULTI-ÓMICA
+2026-07-18 23:09:59,865 - INFO - ============================================================
+2026-07-18 23:09:59,904 - INFO -   ✅ Centralidades calculadas
+2026-07-18 23:09:59,905 - INFO -   ✅ 16 hubs identificados
+2026-07-18 23:09:59,907 - INFO -   ✅ 18 nodos críticos identificados
+2026-07-18 23:09:59,909 - INFO - 
+🧬 GENERANDO HIPÓTESIS MECANÍSTICAS
+2026-07-18 23:09:59,909 - INFO - ============================================================
+2026-07-18 23:09:59,911 - INFO -   ✅ Hipótesis guardadas en: /home/rc/Documents/marcioproyecto/results/hypotheses/hypotheses_proteomics.md
+2026-07-18 23:09:59,911 - INFO - 
+📊 GENERANDO VISUALIZACIONES CON DATOS PROTEÓMICOS
+2026-07-18 23:09:59,912 - INFO - ============================================================
+2026-07-18 23:10:01,521 - INFO -   ✅ Visualizaciones guardadas en: /home/rc/Documents/marcioproyecto/results/figures
+2026-07-18 23:10:01,522 - INFO - 
+============================================================
+2026-07-18 23:10:01,522 - INFO - ✅ PIPELINE CON PROTEÓMICA COMPLETADO
+2026-07-18 23:10:01,522 - INFO - ============================================================
+2026-07-18 23:10:01,522 - INFO -   📊 Red: 42 nodos, 43 aristas
+2026-07-18 23:10:01,522 - INFO -   🧬 Proteínas con datos proteómicos: 42
+2026-07-18 23:10:01,522 - INFO -   📊 Proteínas con datos transcriptómicos: 42
+2026-07-18 23:10:01,522 - INFO -   🎯 Nodos críticos: 18
+2026-07-18 23:10:01,522 - INFO -   📁 Resultados: /home/rc/Documents/marcioproyecto/results
+2026-07-18 23:10:01,523 - INFO -   📄 Reporte: /home/rc/Documents/marcioproyecto/results/hypotheses/hypotheses_proteomics.md
+2026-07-18 23:10:01,523 - INFO - 
+✅ ¡Análisis multi-ómico completado!
+
